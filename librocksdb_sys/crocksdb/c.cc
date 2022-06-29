@@ -2831,6 +2831,11 @@ void crocksdb_options_set_wal_size_limit_mb(crocksdb_options_t* opt,
   opt->rep.WAL_size_limit_MB = limit;
 }
 
+void crocksdb_options_set_fail_on_write(crocksdb_options_t* opt,
+                                         unsigned char v) {
+  opt->rep.fail_on_write = v;
+}
+
 void crocksdb_options_set_manifest_preallocation_size(crocksdb_options_t* opt,
                                                       size_t v) {
   opt->rep.manifest_preallocation_size = v;

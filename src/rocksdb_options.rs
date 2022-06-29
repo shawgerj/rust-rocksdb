@@ -978,6 +978,12 @@ impl DBOptions {
         }
     }
 
+    pub fn set_fail_on_write(&mut self, fail_on_write: bool) {
+        unsafe {
+            crocksdb_ffi::crocksdb_options_set_fail_on_write(self.inner, fail_on_write);
+        }
+    }
+
     pub fn set_wal_dir(&mut self, path: &str) {
         let path = CString::new(path.as_bytes()).unwrap();
         unsafe {

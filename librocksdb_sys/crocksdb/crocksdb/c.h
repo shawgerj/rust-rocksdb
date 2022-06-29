@@ -1185,6 +1185,8 @@ extern C_ROCKSDB_LIBRARY_API void crocksdb_options_set_wal_ttl_seconds(
     crocksdb_options_t*, uint64_t);
 extern C_ROCKSDB_LIBRARY_API void crocksdb_options_set_wal_size_limit_mb(
     crocksdb_options_t*, uint64_t);
+extern C_ROCKSDB_LIBRARY_API void crocksdb_options_set_fail_on_write(
+    crocksdb_options_t*, unsigned char);
 extern C_ROCKSDB_LIBRARY_API void
 crocksdb_options_set_manifest_preallocation_size(crocksdb_options_t*, size_t);
 extern C_ROCKSDB_LIBRARY_API void crocksdb_options_set_allow_mmap_reads(

@@ -2192,6 +2192,9 @@ extern "C" {
     pub fn crocksdb_options_set_wal_size_limit_mb(arg1: *mut crocksdb_options_t, arg2: u64);
 }
 extern "C" {
+     pub fn crocksdb_options_set_fail_on_write(arg1: *mut crocksdb_options_t, arg2: *const libc::c_uchar);
+ }
+extern "C" {
     pub fn crocksdb_options_set_manifest_preallocation_size(
         arg1: *mut crocksdb_options_t,
         arg2: usize,

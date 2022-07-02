@@ -5,5 +5,5 @@
 
 [submodule "titan"]
 	path = librocksdb_sys/libtitan_sys/titan
-	url = https://github.com/tikv/titan.git
-	branch = tikv-5.2
+	url = https://github.com/shawgerj/titan.git
+	branch = shawgerj

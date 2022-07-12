@@ -1614,6 +1614,7 @@ extern "C" {
 
     // Env
     pub fn crocksdb_default_env_create() -> *mut DBEnv;
+    pub fn crocksdb_fault_injection_env_create() -> *mut DBEnv;
     pub fn crocksdb_mem_env_create() -> *mut DBEnv;
     pub fn crocksdb_ctr_encrypted_env_create(
         base_env: *mut DBEnv,

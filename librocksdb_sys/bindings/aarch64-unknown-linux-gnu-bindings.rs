@@ -2950,6 +2950,9 @@ extern "C" {
     pub fn crocksdb_default_env_create() -> *mut crocksdb_env_t;
 }
 extern "C" {
+    pub fn crocksdb_fault_injection_env_create() -> *mut crocksdb_env_t;
+}
+extern "C" {
     pub fn crocksdb_mem_env_create() -> *mut crocksdb_env_t;
 }
 extern "C" {

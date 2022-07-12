@@ -2569,17 +2569,6 @@ impl Default for Env {
     }
 }
 
-impl FaultInjection for Env {
-    fn new_fault_injection() -> Env {
-        unsafe {
-            Env {
-                inner: crocksdb_ffi::crocksdb_fault_injection_env_create(),
-                base: None,
-            }
-        }
-    }
-}
-
 impl Env {
     pub fn new_mem() -> Env {
         unsafe {
@@ -2589,6 +2578,16 @@ impl Env {
             }
         }
     }
+
+    fn new_fault_injection() -> Env {
+        unsafe {
+            Env {
+                inner: crocksdb_ffi::crocksdb_fault_injection_env_create(),
+                base: None,
+            }
+        }
+    }
+
 
     // Create a ctr encrypted env with a given base env and a given ciper text.
     // The length of ciper text must be 2^n, and must be less or equal to 2048.

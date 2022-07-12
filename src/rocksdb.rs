@@ -2569,6 +2569,17 @@ impl Default for Env {
     }
 }
 
+impl FaultInjection for Env {
+    fn new_fault_injection() -> Env {
+        unsafe {
+            Env {
+                inner: crocksdb_ffi::crocksdb_fault_injection_env_create(),
+                base: None,
+            }
+        }
+    }
+}
+
 impl Env {
     pub fn new_mem() -> Env {
         unsafe {

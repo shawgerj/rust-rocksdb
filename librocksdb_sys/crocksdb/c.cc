@@ -3913,6 +3913,15 @@ crocksdb_env_t* crocksdb_default_env_create() {
   return result;
 }
 
+crocksdb_env_t* crocksdb_fault_injection_env_create() {
+  crocksdb_env_t* result = new crocksdb_env_t;
+  result->rep = rocksdb::NewFaultInjectionEnv(Env::Default());
+  result->block_cipher = nullptr;
+  result->encryption_provider = nullptr;
+  result->is_default = false;
+  return result;
+}
+
 crocksdb_env_t* crocksdb_mem_env_create() {
   crocksdb_env_t* result = new crocksdb_env_t;
   result->rep = rocksdb::NewMemEnv(Env::Default());

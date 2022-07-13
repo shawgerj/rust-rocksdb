@@ -92,6 +92,7 @@ typedef struct crocksdb_compactionfilterfactory_t
     crocksdb_compactionfilterfactory_t;
 typedef struct crocksdb_comparator_t crocksdb_comparator_t;
 typedef struct crocksdb_env_t crocksdb_env_t;
+typedef struct crocksdb_fault_env_t crocksdb_fault_env_t;
 typedef struct crocksdb_fifo_compaction_options_t
     crocksdb_fifo_compaction_options_t;
 typedef struct crocksdb_filelock_t crocksdb_filelock_t;
@@ -1595,7 +1596,7 @@ extern C_ROCKSDB_LIBRARY_API void crocksdb_cache_set_capacity(
 /* Env */
 
 extern C_ROCKSDB_LIBRARY_API crocksdb_env_t* crocksdb_default_env_create();
-extern C_ROCKSDB_LIBRARY_API crocksdb_env_t* crocksdb_fault_injection_env_create();
+extern C_ROCKSDB_LIBRARY_API crocksdb_fault_env_t* crocksdb_fault_injection_env_create();
 extern C_ROCKSDB_LIBRARY_API crocksdb_env_t* crocksdb_mem_env_create();
 extern C_ROCKSDB_LIBRARY_API crocksdb_env_t* crocksdb_ctr_encrypted_env_create(
     crocksdb_env_t* base_env, const char* ciphertext, size_t ciphertext_len);
@@ -1611,6 +1612,12 @@ extern C_ROCKSDB_LIBRARY_API void crocksdb_env_file_exists(crocksdb_env_t* env,
 extern C_ROCKSDB_LIBRARY_API void crocksdb_env_delete_file(crocksdb_env_t* env,
                                                            const char* path,
                                                            char** errptr);
+extern C_ROCKSDB_LIBRARY_API void crocksdb_env_drop_unsynced_data(
+    crocksdb_fault_env_t* env,
+    char** errptr);
+extern C_ROCKSDB_LIBRARY_API void crocksdb_env_reset_state(
+    crocksdb_fault_env_t* env,
+    char** errptr);
 extern C_ROCKSDB_LIBRARY_API void crocksdb_env_destroy(crocksdb_env_t*);
 
 extern C_ROCKSDB_LIBRARY_API crocksdb_envoptions_t*

@@ -3387,6 +3387,18 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn crocksdb_env_drop_unsynced_data(
+        env: *mut crocksdb_env_t,
+        errptr: *mut *mut libc::c_char,
+    );
+}
+extern "C" {
+    pub fn crocksdb_env_reset_state(
+        env: *mut crocksdb_env_t,
+        errptr: *mut *mut libc::c_char,
+    );
+}
+extern "C" {
     pub fn crocksdb_env_destroy(arg1: *mut crocksdb_env_t);
 }
 extern "C" {

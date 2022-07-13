@@ -4,6 +4,7 @@ mod test_compaction_filter;
 mod test_compression;
 mod test_delete_files_in_range;
 mod test_delete_range;
+mod test_durability;
 mod test_encryption;
 mod test_event_listener;
 mod test_ingest_external_file;

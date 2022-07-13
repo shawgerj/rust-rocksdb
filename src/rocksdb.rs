@@ -2029,12 +2029,12 @@ impl Writable for DB {
 impl Drop for DB {
     fn drop(&mut self) {
         // SyncWAL before call close.
-        if !self.readonly {
+//        if !self.readonly {
             // DB::SyncWal requires writable file support thread safe sync, but
             // not all types of env can create writable file that support thread
             // safe sync. eg, MemEnv.
-            self.sync_wal().unwrap_or_else(|_| {});
-        }
+//            self.sync_wal().unwrap_or_else(|_| {});
+//        }
         unsafe {
             self.cfs.clear();
             crocksdb_ffi::crocksdb_close(self.inner);
@@ -2579,7 +2579,7 @@ impl Env {
         }
     }
 
-    fn new_fault_injection() -> Env {
+    pub fn new_fault_injection() -> Env {
         unsafe {
             Env {
                 inner: crocksdb_ffi::crocksdb_fault_injection_env_create(),
@@ -2682,6 +2682,20 @@ impl Env {
         unsafe {
             let file_path = CString::new(path).unwrap();
             ffi_try!(crocksdb_env_delete_file(self.inner, file_path.as_ptr()));
+            Ok(())
+        }
+    }
+
+    pub fn drop_unsynced_data(&self) -> Result<(), String> {
+        unsafe {
+            ffi_try!(crocksdb_env_drop_unsynced_data(self.inner));
+            Ok(())
+        }
+    }
+
+    pub fn reset_state(&self) -> Result<(), String> {
+        unsafe {
+            ffi_try!(crocksdb_env_reset_state(self.inner));
             Ok(())
         }
     }

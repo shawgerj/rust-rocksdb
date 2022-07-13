@@ -13,6 +13,7 @@
 
 #include <limits>
 
+#include "env/fault_injection_env.h"
 #include "db/column_family.h"
 #include "rocksdb/cache.h"
 #include "rocksdb/compaction_filter.h"
@@ -97,6 +98,7 @@ using rocksdb::EnvOptions;
 using rocksdb::EventListener;
 using rocksdb::ExternalFileIngestionInfo;
 using rocksdb::ExternalSstFileInfo;
+using rocksdb::FaultInjectionEnv;
 using rocksdb::FileLock;
 using rocksdb::FilterBitsBuilder;
 using rocksdb::FilterBitsReader;
@@ -606,6 +608,13 @@ struct crocksdb_mergeoperator_t : public MergeOperator {
 
 struct crocksdb_env_t {
   Env* rep;
+  bool is_default;
+  EncryptionProvider* encryption_provider;
+  BlockCipher* block_cipher;
+};
+
+struct crocksdb_fault_env_t {
+  FaultInjectionEnv* rep;
   bool is_default;
   EncryptionProvider* encryption_provider;
   BlockCipher* block_cipher;
@@ -3913,9 +3922,9 @@ crocksdb_env_t* crocksdb_default_env_create() {
   return result;
 }
 
-crocksdb_env_t* crocksdb_fault_injection_env_create() {
-  crocksdb_env_t* result = new crocksdb_env_t;
-  result->rep = rocksdb::NewFaultInjectionEnv();
+crocksdb_fault_env_t* crocksdb_fault_injection_env_create() {
+  crocksdb_fault_env_t* result = new crocksdb_fault_env_t;
+  result->rep = rocksdb::NewFaultInjectionEnv(Env::Default());
   result->block_cipher = nullptr;
   result->encryption_provider = nullptr;
   result->is_default = false;
@@ -3993,6 +4002,15 @@ void crocksdb_env_file_exists(crocksdb_env_t* env, const char* path,
 void crocksdb_env_delete_file(crocksdb_env_t* env, const char* path,
                               char** errptr) {
   SaveError(errptr, env->rep->DeleteFile(path));
+}
+
+// shawgerj: adding fault injection env functions    
+void crocksdb_env_drop_unsynced_data(crocksdb_fault_env_t* env, char** errptr) {
+  SaveError(errptr, env->rep->DropUnsyncedFileData());
+}
+    
+void crocksdb_env_reset_state(crocksdb_fault_env_t* env, char** errptr) {
+  env->rep->ResetState();
 }
 
 void crocksdb_env_destroy(crocksdb_env_t* env) {

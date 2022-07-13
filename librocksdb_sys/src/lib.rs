@@ -1623,6 +1623,8 @@ extern "C" {
     ) -> *mut DBEnv;
     pub fn crocksdb_env_file_exists(env: *mut DBEnv, path: *const c_char, err: *mut *mut c_char);
     pub fn crocksdb_env_delete_file(env: *mut DBEnv, path: *const c_char, err: *mut *mut c_char);
+    pub fn crocksdb_env_drop_unsynced_data(env: *mut DBEnv, err: *mut *mut c_char);
+    pub fn crocksdb_env_reset_state(env: *mut DBEnv, err: *mut *mut c_char);
     pub fn crocksdb_env_destroy(env: *mut DBEnv);
 
     // EnvOptions
